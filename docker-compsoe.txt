@@ -1,0 +1,86 @@
+Create docker compose file to start a postgres db and adminer
+webapplication on the network that we created
+
+1 Create a new network
+  docker network create --driver bridge --subnet=192.168.2.0/24 new_intelliqit
+
+2 Create a dcoker compose file
+vim docker-compose.yml
+---
+version: '3.8'
+
+services:
+ db:
+  image: postgres
+  environment:
+   POSTGRES_PASSWORD: intelliqit
+   POSTGRES_USER: user1
+   POSTGRES_DB: mydb
+
+ adminer:
+  image: adminer
+  ports:
+   - 8888:8080
+
+networks:
+ default:
+  external:
+   name: new_intelliqit
+
+3 To create services from the above dockerfile
+  docker compose up -d
+
+4 Check if the adminer can access the db from browser
+  public_ip_of_dockerhost:8888
+
+5 Check the ipaddress of the containers 
+  docker container ls
+  docker insepct container_id_from_above_command
+
+============================================================================
+UseCase
+Create a docker compose file to link mysql and wordpress
+containers also this file should create 2 volumes one for
+each container and it should create 2 bridge networks
+one for each container
+
+vim docker-compose.yml
+---
+version: '3.8'
+
+services:
+ db:
+  image: mysql:5
+  environment:
+   MYSQL_ROOT_PASSWORD: intelliqit
+  volumes:
+   - db:/var/lib/mysql
+  networks:
+   - abc
+
+ wordpress:
+  image: wordpress
+  ports:
+   - 8989:80
+  volumes:
+   - wordpress:/var/www/html
+  networks:
+   - xyz
+
+volumes:
+ wordpress:
+ db:
+
+networks:
+ abc: {}
+ xyz: {}
+
+
+2 To create container from the above docker file
+  docker-compose up -d
+
+3 Check if 2 networks abc,xyz are created
+  docker network ls
+
+4 Check if 2 volumes  db and wordpress are created
+  docker volume ls

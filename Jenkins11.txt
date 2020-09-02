@@ -1,0 +1,60 @@
+
+MultiBranch Pipeline
+=========================
+This is used when developers create  multiple functionalites
+code on differnet branches and upload all these branches into
+the remote github.In such a case we should create a seperate
+jenkinsfile for every branch and the Jenkins job should read
+all these jenkinsfiles parallelly and execute the jobs
+
+
+Developers Activity
+========================
+1 Create a Jenkinsfile on master branch and create few steps in it
+2 Send it to stagging area and local repository
+  git add .
+  git commit -m "a"
+3 Create a new branch and "Loans" and create Jenkinsfile on it
+  git checkout -b Loans
+4 Send this into stagging area and local repository
+  git add .
+  git commit -m "b"
+5 Move to Master nad push all the branches
+  git checkout master
+  git push orgin --all
+
+Devops Engineers Activity
+==================================
+1 Open the dashboard of Jenkins
+2 Click on New item--->Enter some item name(MultBranchPipleine)--->OK
+3 Select MultiBranchPipeline
+4 Go to Branch Sources---->Click on Add source
+  Select Git--->Enter the github url where developers have uplaoded the code
+5 Go to Scan multibranch pipeline triggers
+6 Check Periodically if not otherwise run
+7 Select the time interval as one minute
+9 Save
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
