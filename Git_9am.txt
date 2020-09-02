@@ -1,0 +1,683 @@
+
+
+Version Controlling
+=======================
+This is the process of maintining multiple versions of the code
+All the team members at the end of the day upload thier code
+into a remote server called called as Version controlling system
+This VCS accepts the code uploads from multiple team members and
+integrates it.The next day when the team members download the code
+from the VCS they will be able to access all the code created by the 
+entire team.The process of uploading into VCS is called as checkin
+and downloading from VCS is called as checkout
+
+VCS's preserves older and later versions of the code so that the 
+team members can toggle between any version.
+
+VCS's can track who is making what changes at what time
+
+Thers are 2 types of version controlling systems
+1 Centralised version controlling
+2 Distributed Version controlling
+
+Centralised version controlling
+=====================================
+Here the team members create the code and uplaod into a remote server
+where version controlling happens.On the local machines of the team
+members only code is present
+
+Distributed Version controlling
+====================================
+Here we have a local repository installed on every team members machines
+where version controlling intially happens at the level of the indivdual
+team member.From here the code is uploaded into a remote server where
+version contrlling happens at the level of entire team
+
+
+Installing git on Windows
+==============================
+1 Open https://git-scm.com/downloads
+2 Download and install git for windows
+3 Once git is installed we get an application called gitbash
+  This is the command prompt of git where we can execute the git commands
+
+Installing git on ubuntu
+=============================
+1 Launch terminal in an ubuntu server
+2 Update the apt repository
+  sudo apt-get update
+3 Install git
+  sudo apt-get install -y git
+
+Installing git on RHEL or Centos
+=====================================
+1 Launch the terminal 
+2 Update the yum repository
+  yum -y update
+3 Install git
+  yum install -y git
+
+=====================================================================
+Setting up username and email globally for users
+git config --global user.name "sai krishna"
+git config --global user.email "intelliqittrainings@gmail.com"
+
+To see the list of global configurations 
+git config --global --list
+
+Git when working on the local machine uses 3 sections
+1 Working directory
+2 Stagging Area
+3 Local repository
+
+Working director is also called as workspace and this is the 
+folder where the code is created and the files present here are
+initially called untracked files
+
+Stagging Area is the intermediate buffer zone of git where the 
+file move into and thse files are called as indexed files
+
+Local repository is where version controlling happens and file
+from stagging area come to local repository.These files are
+called a commited files.
+
+1 To initilise the current folder as a git repository
+  git init
+  Note: This create a hidden folder called as .git where it stores
+  configurations for git to work
+
+2 To send a file from working dir to stagging area
+  git add filename
+  To send multiple files from  working dir to stagging area
+  git add file1 file2 file3
+
+3 To bring files back from stagging area to working directory
+  git rm --cached filename
+  (or)
+  git reset filename
+
+4 To send the files from the stagging area to the local repository
+  git commit -m "some message"
+
+5 To check the status of files in working dir and stagging area
+  git status
+
+6 To see the commits done in the local repository
+  git log
+  To see only the commit history only with commitid and commit msgs
+  git log --oneline
+
+==========================================================================
+Branching
+==================
+This is a feature of git where we can create code related to different
+functionalites on different branches.The default branch of git is called
+as master,later the code from different branches can be merged with the 
+master branch
+
+1 To see the list of local branches
+  git branch
+
+2 To see the list if all branches local and remote
+  git branch -a
+
+3 To create a branch
+  git branch branch_name
+
+4 To move into a branch
+  git checkout branch_name
+
+5 To create a branch and also move into it
+  git checkout -b branch_name
+
+6 To delete a branch that is merged
+  git branch -d branch_name
+  This is called as soft delete
+
+7 To delete a branch that is not merged
+  git branch -D branch_name
+  This is called as hard delete
+
+8 To merge a branch
+  git merge branch_name
+
+Note: Whenever a branch is created it will copy the current commit history
+of the parent branch upto that point into the newly created branch
+
+Note: Irrespective of where a file is created or modified git only considers from
+which branch the commit happened and the file belongs to that branch only
+
+=================================================================================
+Working on remote github
+===============================
+1 Open github.com
+2 Signup for a free acoount
+2 Signin into that account
+
+Uploading the code from local reposiotry to remote repository(check in)
+-------------------------------------------------------------------------
+1 Open the gihub.com--->Sigin into our acocunt
+2 Click on + icon on top right corner
+3 Click on New repository
+4 Enter some repository name
+5 Select Public or Private
+6 Click on Create repository
+7 Go to "push an existing reposiotry from command line"
+  Copy the 1st command and paste in gitbash
+8 Copy the blow command and paste in gitbash
+  git push -u origin master
+  Enter username and password of github
+
+Downloading from remote github(checkout)
+--------------------------------------------
+This can be done in 3 ways
+1 git clone
+2 git fetch
+3 git pull
+
+git clone
+==============
+This is used to download the entire remote git repository into the
+local machine.This is generally used only one time when all the team
+members want a copy of the code present in the git remote server
+
+
+git fetch:
+This will work only when the code present in the remote server
+is different from the code present in the local repository
+git fetch will download only the modified files and it will
+place them on a seperate branch which is called as "remote branch"
+We can go to this remote branch and check if the modifications
+ar acceptable,if so we can merge them with the master branch
+
+1 Open github.com
+2 Click on the repository that we updated
+3 Select a file to be modified and click on Edit icon
+4 Make some changes and click on commit changes
+5 Open git bash
+  git fetch
+7 This will download all the modified files and place them on a 
+  remote branch
+8 To see the list of all the branches
+  git branch -a
+9 Move into the remote branch
+  git checkout remote_branch_name_from_step8
+10 Check if the modifications are acceptable if so move to master and merge
+   git checkout master
+   git merge remote_branch_name_from_step8
+
+git pull
+==============
+This will also download only the modified files but it will 
+merge them with the master
+1 Open github.com
+2 Click on the repository that we updated
+3 Select a file to be modified and click on Edit icon
+4 Make some changes and click on commit changes
+5 Open git bash
+  git pull
+  We will be able to see the modified files directly on the master
+
+========================================================================
+
+
+Git reset
+===============
+This is used to move between multiple versions of the code
+This is of 3 types
+1 Hard reset 
+2 Soft reset
+3 Mixed reset
+
+Hard Reset
+==================
+1 Create a file called file1 with the below data
+  one
+
+2 Send it to stagging area and local repository
+  git add .
+  git commit -m "a"
+
+3 Open the same file and add more data
+  one
+  two
+
+4 Send it to stagging area and local repository
+  git add .
+  git commit -m "b"
+
+5 Open the same file and add more data
+  one
+  two
+  three
+
+6 Send it to stagging area and local repository
+  git add .
+  git commit -m "c"
+
+7 Check the commit history
+  git log --oneline
+
+8 To move to an older version example b version
+  git reset --hard b_commit_id_from_step7
+
+=================================================================================
+Git Merging
+===================
+1 Create few commits on master
+  touch f1
+  git add .
+  git commit -m "a"
+  touch f2
+  git add .
+  git commit -m "b"
+
+2 Check the commit history
+  git log --oneline
+
+3 Create a new branch "test" and create few commits on it
+  git checkout -b test
+  touch f3
+  git add .
+  git commit -m "c"
+  touch f4
+  git add .
+  git commit -m "d"
+
+4 Check the commit history
+  git log --oneline
+
+5 Move to master and create few more commits
+  git checkout master
+  touch f5
+  git add .
+  git commit -m "e"
+  touch f6
+  git add .
+  git commit -m "f"
+
+6 Check the commit history
+  git log --oneline
+
+7 Merge test with master
+  git merge test
+
+8 Delete test branch
+  git branch -d test
+
+9 Check the commit history
+  git log --oneline
+
+Git Rebasing or Fast forward merge
+=======================================
+This is used when we want the commits from a branch to be projected
+as the top most commits on the master branch,generally donw when
+the functionality created on the branch has to be projected
+as the latest version of code
+
+1 Repeat Step1-6 from the above merge scenario
+
+2 To rebase test with master
+  git checkout test
+  git rebase master
+  git checkout master
+  git merge test
+
+3 Check the commit history
+  git log --oneline
+
+Git Cherry pick
+======================
+This is used to selectively pick up few commits from a
+branch and add them to the master branch
+
+1 Create a commit on master
+  touch f1
+  git add .
+  git commit -m "a"
+
+2 Create a new branch and create few commits on it
+  git checkout -b test
+  touch f2
+  git add .
+  git commit -m "b"
+  touch f3
+  git add .
+  git commit -m "c"
+  touch f4
+  git add .
+  git commit -m "d"
+  touch f5
+  git add .
+  git commit -m "e"
+
+3 To bring only c and d commits to master
+  git checkout master
+  git cherry-pick  c_commiid d_commitid 
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
